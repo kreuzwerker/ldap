@@ -241,6 +241,12 @@ func (l *LDAPConnection) processMessages() {
     // will shutdown reader.
     l.conn.Close()
   }()
+  defer func() {
+    if r := recover(); r != nil {
+      fmt.Fprintln(os.Stderr, "Recovered in processMessages", r)
+    }
+  }()
+
   var message_id uint64 = 1
   var message_packet *messagePacket
 
@@ -313,6 +319,12 @@ func (l *LDAPConnection) finishMessage(MessageID uint64) {
 
 func (l *LDAPConnection) reader() {
   defer l.Close()
+  defer func() {
+    if r := recover(); r != nil {
+      fmt.Fprintln(os.Stderr, "Recovered in reader", r)
+    }
+  }()
+
   for {
     p, err := ber.ReadPacket(l.conn)
     if err != nil {
