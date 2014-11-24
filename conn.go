@@ -336,6 +336,10 @@ func (l *LDAPConnection) reader() {
 
     addLDAPDescriptions(p)
 
+    if len(p.Children) == 0 {
+      continue
+    }
+
     message_id := p.Children[0].Value.(uint64)
     message_packet := &messagePacket{Op: MessageResponse, MessageID: message_id, Packet: p}
 
