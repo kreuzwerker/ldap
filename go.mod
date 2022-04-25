@@ -1,4 +1,4 @@
-module github.com/kreuzwerker.ldap
+module github.com/kreuzwerker/ldap
 
 go 1.18
 
